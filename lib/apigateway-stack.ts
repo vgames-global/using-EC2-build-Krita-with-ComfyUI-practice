@@ -12,6 +12,7 @@ export interface APIGatewayProps extends NestedStackProps {
     comfyuiServersPostFunc: lambda.IFunction,
     comfyuiServersStopFunc: lambda.IFunction,
     comfyuiServersGetFunc: lambda.IFunction,
+    comfyuiServersTerminateFunc: lambda.IFunction;
     comfyuiCustomNodesFunc: lambda.IFunction;
 }
 
@@ -76,7 +77,9 @@ export class ApigatewayStack extends NestedStack {
                 apiKeyRequired: true
             }
         });
+
         comfyuiServersRootPath.addMethod('POST', new _apigateway.LambdaIntegration(props.comfyuiServersPostFunc));
+
         comfyuiServersRootPath.addMethod('GET', new _apigateway.LambdaIntegration(props.comfyuiServersGetFunc),
         {
             requestParameters: {
@@ -89,13 +92,32 @@ export class ApigatewayStack extends NestedStack {
                 apiKeyRequired: true
             }
         });
+
+
         comfyUIServersStopPath.addMethod('PATCH', new _apigateway.LambdaIntegration(props.comfyuiServersStopFunc));
+
+
+        //dyx*
+        const comfyUIServersTerminatePath = comfyuiServersRootPath.addResource('terminate', {
+            defaultMethodOptions: {
+            apiKeyRequired: true
+            }
+        });
+
+
+        comfyUIServersTerminatePath.addMethod('PATCH', new _apigateway.LambdaIntegration(props.comfyuiServersTerminateFunc));
+
+       
+        //*dyx
         
         const comfyUICustomNodesPath = comfyuiServersRootPath.addResource('custom-nodes', {
             defaultMethodOptions: {
                 apiKeyRequired: true
             }
         });
+
+
+        
         comfyUICustomNodesPath.addMethod('ANY', new _apigateway.LambdaIntegration(props.comfyuiCustomNodesFunc))
         
         const singleComfyUICustomNodesPath = comfyUICustomNodesPath.addResource('{id}', {

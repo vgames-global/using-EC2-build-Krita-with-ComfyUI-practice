@@ -250,6 +250,38 @@
 				"header": []
 			},
 			"response": []
+		},
+		{
+			"name": "ComfyUI Servers Terminate",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{api-key}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"user2\",\n    \"group_name\": \"group1\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/comfyui-servers/terminate",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"comfyui-servers",
+						"terminate"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

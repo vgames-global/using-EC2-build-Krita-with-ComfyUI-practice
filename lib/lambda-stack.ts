@@ -26,6 +26,7 @@ export class LambdaStack extends NestedStack {
     public readonly comfyuiServersStopFunc: lambda.IFunction;
     public readonly comfyuiServersGetFunc: lambda.IFunction;
     public readonly comfyuiCustomNodesFunc: lambda.IFunction;
+    public readonly comfyuiServersTerminateFunc: lambda.IFunction;
 
     constructor(scope: Construct, id: string, props: LambdaStackProps) {
         super(scope, id, props);
@@ -92,6 +93,16 @@ export class LambdaStack extends NestedStack {
                 'USER_COMFYUI_SERVERS_TABLE': Constants.USER_COMFYUI_SERVERS_TABLE,
             },
         });
+
+        // 删除ComfyUI Server DYX
+        this.comfyuiServersTerminateFunc = new lambda.Function(this, 'ComfyUIServersTerminate', {
+            ...functionSettings,
+            functionName: 'ComfyUI-Servers-Terminate-Func',
+            handler: 'comfyui_servers_terminate.lambda_handler',
+            environment: {
+                'USER_COMFYUI_SERVERS_TABLE': Constants.USER_COMFYUI_SERVERS_TABLE,
+            },
+        });
         
         // 获取ComfyUI Servers信息
         this.comfyuiServersGetFunc = new lambda.Function(this, 'ComfyUIServersGet', {
@@ -151,6 +162,7 @@ export class LambdaStack extends NestedStack {
         cdk.Tags.of(this.comfyuiServersPostFunc).add('RESOURCE_TAG', Constants.RESOURCE_TAG);
         cdk.Tags.of(this.comfyuiServersStopFunc).add('RESOURCE_TAG', Constants.RESOURCE_TAG);
         cdk.Tags.of(this.comfyuiServersGetFunc).add('RESOURCE_TAG', Constants.RESOURCE_TAG);
+        cdk.Tags.of(this.comfyuiServersTerminateFunc).add('RESOURCE_TAG', Constants.RESOURCE_TAG);
         cdk.Tags.of(comfyuiServersUpdateFunc).add('RESOURCE_TAG', Constants.RESOURCE_TAG);
     }
 }
