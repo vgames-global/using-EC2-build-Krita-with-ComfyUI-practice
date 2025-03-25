@@ -50,9 +50,11 @@ export class VPCStack extends NestedStack {
         });
       
         // 添加入站规则，允许 SSH（端口 22）和 8848 端口的流量
-        this.comfyUISecurityGroup.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(22), 'Allow SSH access');
-        this.comfyUISecurityGroup.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(8848), 'Allow access to port 8848');
+        //this.comfyUISecurityGroup.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(22), 'Allow SSH access');
+        //this.comfyUISecurityGroup.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(8848), 'Allow access to port 8848');
+        this.comfyUISecurityGroup.addIngressRule(ec2.Peer.ipv4(this.vpc.vpcCidrBlock), ec2.Port.tcp(22), 'Allow SSH access');
         this.comfyUISecurityGroup.addIngressRule(ec2.Peer.ipv4(this.vpc.vpcCidrBlock), ec2.Port.tcp(8848), 'Allow access to port 8848 in vpc');
+        this.comfyUISecurityGroup.addIngressRule(ec2.Peer.ipv4(this.vpc.vpcCidrBlock), ec2.Port.tcp(8188), 'Allow access to port 8188 in vpc');
 
         const comfyuiEC2Role = new iam.Role(this, 'ComfyuiEC2Role', {
             roleName: `comfyui-ec2-role--${cdk.Stack.of(this).region}`,
