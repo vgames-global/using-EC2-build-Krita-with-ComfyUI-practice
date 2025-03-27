@@ -12,8 +12,8 @@ export interface APIGatewayProps extends NestedStackProps {
     comfyuiServersPostFunc: lambda.IFunction,
     comfyuiServersStopFunc: lambda.IFunction,
     comfyuiServersGetFunc: lambda.IFunction,
-    comfyuiServersTerminateFunc: lambda.IFunction;
     comfyuiCustomNodesFunc: lambda.IFunction;
+    comfyuiServersTerminateFunc: lambda.IFunction;
 }
 
 export class ApigatewayStack extends NestedStack {
