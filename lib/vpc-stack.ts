@@ -25,17 +25,17 @@ export class VPCStack extends NestedStack {
             maxAzs: 4, // 使用两个可用区
             subnetConfiguration: [
                 {
-                    cidrMask: 28,
+                    cidrMask: 24,
                     name: 'PublicSubnet1',
                     subnetType: ec2.SubnetType.PUBLIC,
                 },
                 {
-                    cidrMask: 28,
+                    cidrMask: 24,
                     name: 'PublicSubnet2',
                     subnetType: ec2.SubnetType.PUBLIC,
                 },
                 {
-                    cidrMask: 28,
+                    cidrMask: 24,
                     name: 'PrivateSubnet1',
                     subnetType: ec2.SubnetType.PRIVATE_WITH_EGRESS,
                 },
