@@ -32,6 +32,7 @@ export class ComfyuiOnAwsEc2Stack extends cdk.Stack {
       comfyuiServersStopFunc: lambdas.comfyuiServersStopFunc,
       comfyuiServersGetFunc: lambdas.comfyuiServersGetFunc,
       comfyuiCustomNodesFunc: lambdas.comfyuiCustomNodesFunc,
+      comfyuiServerTerminateFunc: lambdas.comfyuiServerTerminateFunc,
     });
 
     const ec2_stack = new EC2Stack(this, 'ec2-stack', {
