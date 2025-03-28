@@ -175,8 +175,8 @@ EOF
         instance_id=instances[0].id
 
         # Allocate and associate Elastic IP DYX
-        allocation = ec2_client.allocate_address(Domain='vpc')
-        ec2_client.associate_address(InstanceId=instance_id, AllocationId=allocation['AllocationId'])
+        # allocation = ec2_client.allocate_address(Domain='vpc')
+        # ec2_client.associate_address(InstanceId=instance_id, AllocationId=allocation['AllocationId'])
 
         put_alarm_metric_alarm(instance_id=instance_id, idle_time=idle_time)
         create_comfyui_servers_info(username=username, group_name=group_name, instance_id=instance_id)
