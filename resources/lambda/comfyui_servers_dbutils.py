@@ -65,9 +65,10 @@ def delete_comfyui_servers_info(username):
         response = table.delete_item(
             Key={
                 'username': username
-            }
+            },
         )
-        print("DeleteItem succeeded:", response)
+        print(f"Successfully deleted record for user: {username}")
+        return response
     except Exception as e:
         print(f"Error deleting item: {e}")        
         raise e

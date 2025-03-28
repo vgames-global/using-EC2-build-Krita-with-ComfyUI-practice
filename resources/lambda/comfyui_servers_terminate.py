@@ -32,7 +32,7 @@ def lambda_handler(event, context):
 def terminate_instance(instance_id,username):
     try:
         response = ec2_client.terminate_instances(InstanceIds=[instance_id])
-        delete_comfyui_servers_info(username)
+        delete_comfyui_servers_info(username=username)
         print(f'Successfully terminated instance: {instance_id}')
         return response
     except Exception as e:
