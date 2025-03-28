@@ -59,6 +59,18 @@ def create_comfyui_servers_info(username, group_name, instance_id):
     except Exception as e:
         print(f'Error stopping instance: {e}')
         raise e
+    
+def delete_comfyui_servers_info(username):
+    try:
+        response = table.delete_item(
+            Key={
+                'username': username
+            }
+        )
+        print("DeleteItem succeeded:", response)
+    except Exception as e:
+        print(f"Error deleting item: {e}")        
+        raise e
 
 def update_comfyui_server_info(username, instance_id, status, server_info, private_ip):
     now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
