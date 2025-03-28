@@ -40,7 +40,7 @@ export class EC2Stack extends NestedStack {
             allowAllOutbound: true   // 允许所有出站流量
         });
         // 允许 SSH 访问
-        securityGroup.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(22), 'allow ssh access');
+        //DYX comment out securityGroup.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(22), 'allow ssh access');
         //securityGroup.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(80), 'allow http access');
 
         // Generate File Broswer User Password
