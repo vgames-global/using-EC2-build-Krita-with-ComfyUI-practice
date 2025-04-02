@@ -29,12 +29,54 @@ def lambda_handler(event, context):
             "body": json.dumps({"message": f"No instance exists with username: {username}", "code": 400})
         }
 
-def terminate_instance(instance_id,username):
+def terminate_instance(instance_id, username):
+    """
+    Terminates an EC2 instance and removes its record from DynamoDB.
+    
+    Args:
+        instance_id (str): The ID of the EC2 instance to terminate
+        username (str): The username associated with the instance
+        
+    Returns:
+        dict: Dictionary containing both termination and deletion responses
+        
+    Raises:
+        Exception: If either operation fails
+    """
+    result = {
+        'termination_response': None,
+        'deletion_response': None
+    }
+    
     try:
-        response = ec2_client.terminate_instances(InstanceIds=[instance_id])
-        delete_comfyui_servers_info(username=username)
-        print(f'Successfully terminated instance: {instance_id}')
-        return response
+        # Terminate the EC2 instance
+        termination_response = ec2_client.terminate_instances(
+            InstanceIds=[instance_id]
+        )
+        result['termination_response'] = termination_response
+        print(f'Successfully initiated termination for instance: {instance_id}')
+        
+        # Wait for termination to complete (optional)
+        waiter = ec2_client.get_waiter('instance_terminated')
+        waiter.wait(InstanceIds=[instance_id])
+        print(f'Instance {instance_id} fully terminated')
+        
     except Exception as e:
-        print(f'Error terminate instance: {e}')
+        print(f'Error terminating instance {instance_id}: {e}')
         raise e
+    
+    try:
+        # Delete the DynamoDB record
+        deletion_response = delete_comfyui_servers_info(username)
+        result['deletion_response'] = deletion_response
+        
+        if deletion_response and 'Attributes' in deletion_response:
+            print(f"Deleted record for user: {username}")
+        else:
+            print(f"No record found for user: {username}")
+            
+    except Exception as e:
+        print(f'Error deleting record for user {username}: {e}')
+        raise e
+    
+    return result

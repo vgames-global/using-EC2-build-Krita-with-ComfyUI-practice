@@ -66,12 +66,26 @@ def delete_comfyui_servers_info(username):
             Key={
                 'username': username
             },
+            # Optional: Add condition to ensure the item exists
+            # ConditionExpression='attribute_exists(username)',
+            ReturnValues='ALL_OLD'  # Returns the deleted item
         )
-        print(f"Successfully deleted record for user: {username}")
+        
+        # Check if the item was actually deleted
+        if 'Attributes' not in response:
+            print(f"No record found for user: {username}")
+        else:
+            print(f"Successfully deleted record for user: {username}")
+            
         return response
+    except table.meta.client.exceptions.ConditionalCheckFailedException:
+        print(f"No record found for user: {username}")
+        return None
     except Exception as e:
         print(f"Error deleting item: {e}")        
         raise e
+
+
 
 def update_comfyui_server_info(username, instance_id, status, server_info, private_ip):
     now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
