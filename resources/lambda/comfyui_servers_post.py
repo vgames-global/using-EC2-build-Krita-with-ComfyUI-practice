@@ -209,7 +209,7 @@ def put_alarm_metric_alarm(instance_id, idle_time):
         ComparisonOperator='LessThanThreshold',
         EvaluationPeriods=int(idle_time),
         MetricName='nvidia_smi_utilization_gpu',
-        Namespace='CWAgent',
+        Namespace='GPU/Metrics',
         Period=60,
         Statistic='Maximum',
         Threshold=1.0,
