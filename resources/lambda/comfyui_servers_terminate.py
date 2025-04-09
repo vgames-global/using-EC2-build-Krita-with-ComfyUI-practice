@@ -57,9 +57,9 @@ def terminate_instance(instance_id, username):
         print(f'Successfully initiated termination for instance: {instance_id}')
         
         # Wait for termination to complete (optional)
-        waiter = ec2_client.get_waiter('instance_terminated')
-        waiter.wait(InstanceIds=[instance_id])
-        print(f'Instance {instance_id} fully terminated')
+        # waiter = ec2_client.get_waiter('instance_terminated')
+        # waiter.wait(InstanceIds=[instance_id])
+        # print(f'Instance {instance_id} fully terminated')
         
     except Exception as e:
         print(f'Error terminating instance {instance_id}: {e}')
