@@ -1,7 +1,10 @@
 from datetime import datetime
 import os
 import boto3
+import json
+import uuid
 from boto3.dynamodb.conditions import Key
+from botocore.exceptions import ClientError
 
 comfyui_servers_table = os.environ.get('USER_COMFYUI_SERVERS_TABLE')
 comfyui_server_port = os.environ.get('COMFYUI_SERVER_PORT')
@@ -66,11 +69,13 @@ def delete_comfyui_servers_info(username):
             Key={
                 'username': username
             },
+            ConditionExpression='attribute_exists(username)'  # Ensure the item exists before deleting
             # Optional: Add condition to ensure the item exists
             # ConditionExpression='attribute_exists(username)',
-            ReturnValues='ALL_OLD'  # Returns the deleted item
+            # ReturnValues='ALL_OLD'  # Returns the deleted item
         )
-        
+        return response # Returns the response from the delete_item call
+    except ClientError as e:
         # Check if the item was actually deleted
         if 'Attributes' not in response:
             print(f"No record found for user: {username}")
