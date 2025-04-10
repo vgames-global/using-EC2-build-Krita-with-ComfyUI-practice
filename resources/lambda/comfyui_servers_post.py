@@ -211,7 +211,7 @@ def put_alarm_metric_alarm(instance_id, idle_time):
         MetricName='nvidia_smi_utilization_gpu',
         Namespace='GPU/Metrics',
         Period=60,
-        Statistic='Maximum',
+        Statistic='Average',
         Threshold=1.0,
         ActionsEnabled=True,
         AlarmActions=[f'arn:aws:swf:{region}:{account_id}:action/actions/AWS_EC2.InstanceId.Stop/1.0'],
@@ -224,6 +224,10 @@ def put_alarm_metric_alarm(instance_id, idle_time):
             {
                 'Name': 'name', 
                 'Value': gpu_info['gpu']
+            },
+            {
+                'Name': 'pstate', 
+                'Value': 'P8'  # Moved Pstate here as dimension
             },
             {
                 'Name': 'index', 
