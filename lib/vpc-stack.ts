@@ -55,7 +55,8 @@ export class VPCStack extends NestedStack {
         this.comfyUISecurityGroup.addIngressRule(ec2.Peer.ipv4(this.vpc.vpcCidrBlock), ec2.Port.tcp(22), 'Allow SSH access');
         this.comfyUISecurityGroup.addIngressRule(ec2.Peer.ipv4(this.vpc.vpcCidrBlock), ec2.Port.tcp(8848), 'Allow access to port 8848 in vpc');
         this.comfyUISecurityGroup.addIngressRule(ec2.Peer.ipv4(this.vpc.vpcCidrBlock), ec2.Port.tcp(8188), 'Allow access to port 8188 in vpc');
-        this.comfyUISecurityGroup.addIngressRule(ec2.Peer.ipv4(this.vpc.vpcCidrBlock), ec2.Port.tcp(3389), 'Allow access to port 8188 in vpc');
+        this.comfyUISecurityGroup.addIngressRule(ec2.Peer.ipv4(this.vpc.vpcCidrBlock), ec2.Port.tcp(8288), 'Allow access to port 8288 in vpc');
+        this.comfyUISecurityGroup.addIngressRule(ec2.Peer.ipv4(this.vpc.vpcCidrBlock), ec2.Port.tcp(3389), 'Allow access to port 3389 in vpc');
 
         const comfyuiEC2Role = new iam.Role(this, 'ComfyuiEC2Role', {
             roleName: `comfyui-ec2-role--${cdk.Stack.of(this).region}`,
