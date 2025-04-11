@@ -226,10 +226,6 @@ def put_alarm_metric_alarm(instance_id, idle_time):
                 'Value': gpu_info['gpu']
             },
             {
-                'Name': 'pstate', 
-                'Value': 'P8'  # Moved Pstate here as dimension
-            },
-            {
                 'Name': 'index', 
                 'Value': '0'
             },
