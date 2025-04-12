@@ -232,8 +232,7 @@ def put_alarm_metric_alarm(instance_id, idle_time):
             {
                 'Name': 'arch', 
                 'Value': gpu_info['arch']
-            },
-            {'Name': 'compute_mode', 'Value': 'Default'}
+            }
         ],
         TreatMissingData='notBreaching' #没有数据的点不不触发告警.
     )
