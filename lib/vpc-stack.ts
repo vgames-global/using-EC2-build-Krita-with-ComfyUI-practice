@@ -29,11 +29,11 @@ export class VPCStack extends NestedStack {
                     name: 'PublicSubnet1',
                     subnetType: ec2.SubnetType.PUBLIC,
                 },
-                {
-                    cidrMask: 24,
-                    name: 'PublicSubnet2',
-                    subnetType: ec2.SubnetType.PUBLIC,
-                },
+                // DYX comment out public subnet{
+                //    cidrMask: 24,
+                //    name: 'PublicSubnet2',
+                //    subnetType: ec2.SubnetType.PUBLIC,
+                //},
                 {
                     cidrMask: 24,
                     name: 'PrivateSubnet1',
