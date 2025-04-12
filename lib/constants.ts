@@ -8,7 +8,7 @@ export class Constants {
     public static readonly EC2_KEY_NAME = process.env.EC2_KEY_NAME ??''
     public static readonly EC2_INSTANCE_TYPE = process.env.EC2_INSTANCE_TYPE ??'g6.2xlarge'
     public static readonly RESOURCE_TAG = "COMFYUI-SERVERS"
-    public static readonly COMFYUI_SERVER_PORT = '8848'
+    public static readonly COMFYUI_SERVER_PORT = '8188'
     public static readonly VPC_CIDR = process.env.VPC_CIDR ??'10.0.0.0/16'
     public static readonly EC2_NAME_PREFIX = 'comfyui-'
     public static readonly SERVER_IDLE_TIME= process.env.SERVER_IDLE_TIME ??'30'
