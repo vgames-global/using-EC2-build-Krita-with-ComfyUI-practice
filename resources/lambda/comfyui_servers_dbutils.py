@@ -63,31 +63,30 @@ def create_comfyui_servers_info(username, group_name, instance_id):
         print(f'Error stopping instance: {e}')
         raise e
     
-def delete_comfyui_servers_info(username):
+def delete_comfyui_servers_info(username, instance_id):
+    response = None # Initialize response
     try:
         response = table.delete_item(
             Key={
-                'username': username
+                'username': username,
+                'instance_id': instance_id
             },
-            ConditionExpression='attribute_exists(username)'  # Ensure the item exists before deleting
-            # Optional: Add condition to ensure the item exists
-            # ConditionExpression='attribute_exists(username)',
-            # ReturnValues='ALL_OLD'  # Returns the deleted item
+            ConditionExpression='attribute_exists(username)'
         )
-        return response # Returns the response from the delete_item call
-    except ClientError as e:
-        # Check if the item was actually deleted
-        if 'Attributes' not in response:
-            print(f"No record found for user: {username}")
-        else:
-            print(f"Successfully deleted record for user: {username}")
-            
         return response
+    except ClientError as e:
+        # Check if the error is a ConditionalCheckFailedException
+        if e.response['Error']['Code'] == 'ConditionalCheckFailedException':
+            print(f"No record found for user: {username}")
+            return None
+        else:
+            print(f"ClientError deleting item: {e}")
+            return None
     except table.meta.client.exceptions.ConditionalCheckFailedException:
         print(f"No record found for user: {username}")
         return None
     except Exception as e:
-        print(f"Error deleting item: {e}")        
+        print(f"Error deleting item: {e}")
         raise e
 
 

@@ -67,7 +67,8 @@ def terminate_instance(instance_id, username):
     
     try:
         # Delete the DynamoDB record
-        deletion_response = delete_comfyui_servers_info(username)
+        deletion_response = delete_comfyui_servers_info(username, instance_id)
+        
         result['deletion_response'] = deletion_response
         
         if deletion_response and 'Attributes' in deletion_response:
